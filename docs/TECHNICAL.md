@@ -6,14 +6,14 @@
 
 `data/processed/official/corpus.jsonl` 是網站搜尋的資料。一行是一條法條或一點契約規範，包含全文、官方來源和文件 ID。網站直接讀這份檔案，由 `python manage.py build` 重建。
 
-`data/annotations/A.csv` 到 `E.csv` 是工作表，放原文核對、詞組、口語對照、搜尋題和相關性標註。用 `doc_id` 找回引用的原文，用 `corpus_id` 確認一起使用的是同一版資料。修改 CSV 的標註或狀態後，網站的原文和搜尋排序不會跟著更新。若要接入口語對照，由 C 在搜尋模組實作。
+`data/annotations/A.csv` 到 `E.csv` 是工作表，放原文核對、詞組、口語對照、搜尋題和相關性標註。用 `doc_id` 找回引用的原文，用 `corpus_id` 確認一起使用的是同一版資料。新增網站可搜尋的法條時，由 A 更新來源並重建語料。若要接入口語對照，由 C 在搜尋模組實作。
 
 ## CSV 怎麼填
 
-用 CSV UTF-8 存檔。保留下面 12 欄與原順序，ID 欄在 Excel 設為文字。每筆 `id` 加上自己的角色前綴，例如 `B_P_01`。可以直接複製 A.csv 的格式。
+用 CSV UTF-8 存檔。保留下面 11 欄與原順序，ID 欄在 Excel 設為文字。每筆 `id` 加上自己的角色前綴，例如 `B_P_01`。`author` 填角色代號，例如 `A`。可以直接複製 A.csv 的格式。
 
 ```csv
-kind,id,corpus_id,doc_id,query_id,text,target,label,evidence,source_url,author,status
+kind,id,corpus_id,doc_id,query_id,text,target,label,evidence,source_url,author
 ```
 
 | kind | 要填的內容 | label 怎麼選 |
@@ -24,7 +24,7 @@ kind,id,corpus_id,doc_id,query_id,text,target,label,evidence,source_url,author,s
 | `query` | 問題放 `text`，本列 `id` 就是問題 ID，`doc_id` 可留空 | `development` 開發、`demo` 展示、`user_study` 使用者研究 |
 | `qrel` | `query_id` 填問題 ID，`doc_id` 填對應文件，`evidence` 寫判分理由 | `2` 直接相關、`1` 背景、`0` 不相關 |
 
-`status` 可填 `draft`、`needs_review`、`approved` 或 `disputed`。各自確認自己的列再改為 `approved`，先確認題目再確認該題的相關性列。正式評估與口語對照採用已確認的資料。`python manage.py check` 會核對格式、引用與原文，相關性和適用情境由負責人判斷。
+交檔前先確認題目和相關性列能對上，再把判分理由或查核紀錄寫在 `evidence`。`python manage.py check` 會核對格式、引用與原文，相關性和適用情境由負責人判斷。
 
 ## 後端怎麼接
 
@@ -74,4 +74,6 @@ E 的 `evaluate(runs, qrels)` 需要兩份資料。`runs` 是「問題 ID → �
 
 契約規範使用內政部 114 年 4 月 18 日公告版，擷取 PDF 第 1～7 頁正文並整理排版空白。來源、版本及檔案雜湊記在 `data/seed/source_manifest.json`。 [開放資料集](https://data.gov.tw/dataset/178758) · [公告全文](https://www.ey.gov.tw/File/43BC094940995CFC?A=C)
 
-平常直接用附帶的來源檔重建。要更新完整法規快照時，用 `python manage.py download --output data/raw/official/new.xml` 先保存新檔。若要重新擷取法規子集，`build --extract-full` 會從 `data/raw/official/laws.xml` 與同名 manifest，依 `config/scope.json` 挑出條文。更換語料前要同步檢查版本和標註引用。
+要補法條時，A 先用法規名稱和條號確認是否已收錄，再核對官方版本。如果附帶的 XML 子集已有該條，只需調整 `config/scope.json` 的 `articles`，再跑 `python manage.py build`。如果子集缺少該條，且官方完整法律 XML 有收錄，先準備 `data/raw/official/laws.xml` 和 `laws.manifest.json`。本機沒有快照時可執行 `python manage.py download`。調整範圍後跑 `python manage.py build --extract-full`，重新擷取條文與更新來源紀錄。官方公告 PDF 等其他格式由 A 先整理來源與匯入方式。
+
+語料內容有變動時，先在 `config/project.json` 設定新的 `corpus_id`。重建後核對原本引用的條文有沒有改版或移除，確認後同步更新各 CSV 的 `corpus_id` 和受影響的標註。跑 `python manage.py check`，再重啟網站搜尋新條文。兩個版本的資料可透過 Git 保留。
