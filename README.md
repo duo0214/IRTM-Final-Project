@@ -1,10 +1,10 @@
 # LawExplore 法律資訊探索
 
-這是 IRTM 五人小組的期末專案。網站可以搜尋法條和契約規範、查詞組出現在哪些文本，並點開原文。現在有 467 筆官方文本，分成租賃、勞動、消費、個資和交通。
+這是 IRTM 的期末專案。網站可以搜尋法條和契約規範、查詞組出現在哪些文本，並點開原文。現在有 467 筆官方文本，分成租賃、勞動、消費、個資和交通。
 
 ## 先把網站跑起來
 
-需要 Python 3.9 以上。Windows 可以雙擊 `Start-LawExplore.cmd`，也可以在專案資料夾執行：
+需要 Python 3.9 以上。Windows 可以點 `Start-LawExplore.cmd`，也可以在專案資料夾執行：
 
 ```powershell
 python -X utf8 run.py --open
@@ -24,4 +24,4 @@ python -X utf8 run.py --open
 | D | 詞組共現與原文上下文 | 個資 |
 | E | 搜尋評估與使用者研究 | 交通 |
 
-網站讀 `corpus.jsonl`。每個人用自己的 CSV 整理原文、詞組和搜尋題，A.csv 有現成範例。CSV 欄位和程式介面需要時再查[技術參考](docs/TECHNICAL.md)。開會時也可以用[三頁交接指南](docs/LawExplore_三頁交接指南.pdf)對照分工。
+網站讀 `corpus.jsonl`。每個人用自己的 CSV 整理原文、詞組和搜尋題，A.csv 有現成範例。CSV 欄位和程式介面需要時再查[技術參考](docs/TECHNICAL.md)。
