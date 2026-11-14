@@ -2,7 +2,7 @@
 import csv
 from pathlib import Path
 
-FIELDS=['kind','id','corpus_id','doc_id','query_id','text','target','label','evidence','source_url','author','status']
+FIELDS=['kind','id','corpus_id','doc_id','query_id','text','target','label','evidence','source_url','author']
 KINDS={'audit','phrase','mapping','query','qrel'}
 
 def read_work(path):
@@ -26,7 +26,6 @@ def validate_annotations(directory, documents, corpus_id):
             ids.add(r['id'])
             if r['corpus_id']!=corpus_id:fail('wrong corpus_id')
             if not r['author']:fail('author required')
-            if r['status'] not in ('draft','needs_review','approved','disputed'):fail('invalid status')
             if r['kind']!='query' and r['doc_id'] not in docs:fail('unknown doc_id')
             if r['kind'] in ('audit','phrase','mapping','qrel') and not r['evidence'].strip():fail('evidence required')
             if r['kind']=='audit' and r['text']!=docs.get(r['doc_id'],{}).get('text'):fail('audit text differs from corpus')
@@ -47,6 +46,5 @@ def validate_annotations(directory, documents, corpus_id):
             if pair in pairs:errors.append(label+': duplicate judgment')
             pairs.add(pair)
             if r['label'] not in ('0','1','2'):errors.append(label+': relevance must be 0/1/2')
-            if r['status']=='approved' and queries.get(r['query_id'],{}).get('status')!='approved':errors.append(label+': query must be approved first')
     if errors:raise ValueError('\n'.join(errors))
-    return {'rows_checked':len(rows),'queries':len(queries),'judgments':len(pairs),'approved_rows':sum(r['status']=='approved' for r in rows)}
+    return {'rows_checked':len(rows),'queries':len(queries),'judgments':len(pairs)}
