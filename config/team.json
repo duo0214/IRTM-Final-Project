@@ -1,0 +1,108 @@
+[
+  {
+    "role": "A",
+    "title": "資料與前端",
+    "domain": "租賃權利義務",
+    "color": "#508c78",
+    "module": "src/corpus/parser.py + frontend/ + data/annotations/A.csv",
+    "guide": "docs/TEAM.md",
+    "ready": "467 筆官方文本。A.csv 有 100 筆租賃原文、19 詞組、19 映射、25 題與 55 筆相關性初稿。",
+    "mission": "建立可追溯、可重建的正式語料；讓其他人不用各自解析法律資料。",
+    "first": "自行確認 A.csv 的租賃文本、搜尋題與標註，再試走搜尋、原文和詞組探索。",
+    "inputs": "官方 XML、config/scope.json、五人各自的CSV",
+    "outputs": "corpus.jsonl、來源快照、A.csv 與網站介面",
+    "acceptance": "語料可重建且來源可追溯，搜尋、原文及詞組探索可正常操作。",
+    "tasks": [
+      "確認法條施行狀態與來源版本",
+      "維護租賃章節及五領域語料，確認來源與施行狀態",
+      "補齊解析錯誤報告與增量版本策略",
+      "合併五人標註並檢查引用 ID",
+      "主要修改前端的搜尋、原文與詞組探索流程",
+      "依 E 的研究事件規格串接前端"
+    ],
+    "boundary": "維護共同語料及網站介面。D 提供關聯分析與上下文，E 提供研究事件規格。"
+  },
+  {
+    "role": "B",
+    "title": "PAT-tree 與詞組",
+    "domain": "勞動權益",
+    "color": "#bc8555",
+    "module": "src/phrase_mining/pat_tree.py + data/annotations/B.csv",
+    "guide": "docs/TEAM.md",
+    "ready": "真實字串掃描核對器；正式PAT-tree由B實作",
+    "mission": "實作可說明的 PAT-tree，並從語料發現與驗證法律詞組。",
+    "first": "執行 python manage.py example B，再完成團隊手冊的第一個任務。",
+    "inputs": "同一份 corpus.jsonl 與原始 text",
+    "outputs": "可替換索引類別、phrases.csv、phrase_documents.csv、品質分析",
+    "acceptance": "與直接掃描結果一致；不跨文件；位置能切回原詞；有結構與效能說明。",
+    "tasks": [
+      "實作 PAT-tree 與查詢位置",
+      "產生候選詞組而非只使用種子詞",
+      "輸出詞組及文件對應表",
+      "比較品質、效能與失敗案例"
+    ],
+    "boundary": "不負責推論法律同義詞；不能把掃描器改名當作 PAT-tree。"
+  },
+  {
+    "role": "C",
+    "title": "搜尋與推薦",
+    "domain": "消費者保護",
+    "color": "#728cc4",
+    "module": "src/retrieval/bm25.py + recommender.py + data/annotations/C.csv",
+    "guide": "docs/TEAM.md",
+    "ready": "字元 unigram+bigram BM25、種子詞推薦、HTTP API",
+    "mission": "改善口語查詢的檢索與推薦，維持前端與評估可依賴的介面。",
+    "first": "執行 python manage.py example C，再完成團隊手冊的第一個任務。",
+    "inputs": "corpus、B 的詞組庫、各成員確認後的口語映射",
+    "outputs": "檢索模組、推薦依據、穩定 API、run 檔與比較結果",
+    "acceptance": "不改前端就能替換；排名可重現；推薦可追溯；Benchmark 與官方索引分離。",
+    "tasks": [
+      "加入中文斷詞並比較 baseline",
+      "審核與接入口語映射",
+      "接入 B 的正式詞組庫",
+      "保留 run 檔、參數與錯誤分析"
+    ],
+    "boundary": "不修改法條原文；不能把 BM25 分數稱為正確率或信心值。"
+  },
+  {
+    "role": "D",
+    "title": "詞組關聯與上下文",
+    "domain": "個人資料保護",
+    "color": "#9a7eb2",
+    "module": "src/relation_mining/relations.py + data/annotations/D.csv",
+    "guide": "docs/TEAM.md",
+    "ready": "原文上下文與文件 Jaccard 參考實作",
+    "mission": "驗證並擴充詞組關聯與原文上下文，提供給前端呈現。",
+    "first": "執行 python manage.py example D，再完成團隊手冊的第一個任務。",
+    "inputs": "共同語料、B 的詞組與位置",
+    "outputs": "詞組關聯模組、原文上下文與關聯依據",
+    "acceptance": "上下文可核對原文，關聯結果可重現並有文件依據。",
+    "tasks": [
+      "驗證詞組共現及上下文",
+      "試作一種關聯分析改良",
+      "整理關聯結果與可重現的輸出範例"
+    ],
+    "boundary": "負責關聯模組及個資標註。A 負責前端介面。"
+  },
+  {
+    "role": "E",
+    "title": "評估與研究",
+    "domain": "常見交通違規",
+    "color": "#b28b55",
+    "module": "src/evaluation/metrics.py + data/annotations/E.csv",
+    "guide": "docs/TEAM.md",
+    "ready": "指標參考程式、A的真實問題與相關性初稿；正式Benchmark與研究由E完成",
+    "mission": "建立可信的標註、獨立檢索評估與探索性使用者研究。",
+    "first": "執行 python manage.py example E，再完成團隊手冊的第一個任務。",
+    "inputs": "原始 Benchmark、C 的排名、各成員確認後的標註、A 串接的操作事件",
+    "outputs": "評估腳本、標註規範、qrels、研究任務、實驗圖表與限制",
+    "acceptance": "兩套語料分開；人工/合成查詢分表；有原始結果與可重跑指令。",
+    "tasks": [
+      "確認 LawFactsQA-TW 原始資料與 ID 對應",
+      "制定標註規範與相關性評分流程",
+      "設計平衡順序的 A/B 任務與預試",
+      "執行評估、報告樣本數與限制"
+    ],
+    "boundary": "不把示例指標當作成果；不保證改善或顯著性；不代做其他人的領域標註。"
+  }
+]

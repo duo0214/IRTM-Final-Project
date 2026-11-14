@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LawExplore｜法律資訊探索系統</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<aside class="sidebar">
+ <a class="brand" href="#search"><span class="brand-icon">L<span>↗</span></span><span>LawExplore<small>法律資訊探索系統</small></span></a>
+ <nav aria-label="主要導覽">
+  <button class="nav active" data-page="search"><span aria-hidden="true">⌕</span>法律問題搜尋</button>
+  <button class="nav" data-page="explore"><span aria-hidden="true">⋈</span>法律詞組探索</button>
+ </nav>
+</aside>
+<main>
+ <div class="content">
+ <div id="global-error" class="error" role="alert" hidden></div>
+ <section id="page-search" class="page">
+  <h1>法律問題搜尋</h1>
+  <form id="search-form" class="search-box"><label class="sr-only" for="query">輸入法律問題</label><span class="search-icon">⌕</span><input id="query" maxlength="200" required placeholder="例如：出租人應該負責修繕嗎？" autocomplete="off"><button class="primary" type="submit">搜尋 <span>↗</span></button></form>
+  <div class="examples"><span>試試看</span><button data-query="租屋押金">租屋押金</button><button data-query="租屋電費">租屋電費</button><button data-query="加班工資">加班工資</button><button data-query="個人資料蒐集">個人資料蒐集</button><button data-query="停車罰鍰">停車罰鍰</button></div>
+  <div class="filter-row"><label>搜尋領域 <select id="domain"><option value="">全部領域</option></select></label><label>顯示 <select id="top-k"><option>5</option><option>10</option><option>20</option></select> 筆</label></div>
+  <div class="workspace-grid"><div><div class="section-heading"><h2 id="results-title">搜尋結果</h2><span id="result-count" class="subtle">等待查詢</span></div><div id="search-status" role="status" aria-live="polite"></div><div id="results"><div class="empty"><span class="empty-symbol">⌕</span><h3>先提出一個問題</h3><p>輸入問題或點選上方範例。</p></div></div></div>
+   <aside class="context-panel"><h3>相關詞組</h3><div id="suggestions" class="suggestions"><span class="subtle">搜尋後顯示</span></div><div class="data-summary"><h3>收錄範圍</h3><div id="domain-counts"></div></div></aside></div>
+ </section>
+ <section id="page-explore" class="page" hidden>
+  <h1>法律詞組探索</h1>
+  <form id="phrase-form" class="search-box"><label class="sr-only" for="phrase-input">查詢詞組</label><span class="search-icon">⋈</span><input id="phrase-input" maxlength="200" required value="修繕" placeholder="輸入詞組，例如修繕"><button class="primary" type="submit">探索詞組 ↗</button></form>
+  <div id="phrase-seeds" class="examples"></div><div id="phrase-status" role="status" aria-live="polite"></div><div id="phrase-result"></div>
+ </section>
+
+
+ </div>
+</main>
+<dialog id="document-dialog"><div class="dialog-top"><span class="eyebrow">原文</span><button id="close-dialog" aria-label="關閉原文">✕</button></div><div id="document-content"></div></dialog>
+<script src="/app.js" defer></script></body></html>

@@ -1,0 +1,25 @@
+{
+  "landing_url": "https://data.gov.tw/dataset/18289",
+  "download_url": "https://sendlaw.moj.gov.tw/PublicData/GetFile.ashx?AuData=CF&DType=RAW_XML",
+  "retrieved_at": "2026-11-13T16:07:29.394967+00:00",
+  "sha256": "7fceee6545eb788dd7f56044a6dcb6d27add5db351c8a1007d20dc5b7e0b8021",
+  "bytes": 25726787,
+  "license": "政府資料開放授權條款第1版",
+  "file": "data\\raw\\official\\laws.xml",
+  "subset_file": "data/seed/official_sample.xml",
+  "subset_sha256": "7afecdc70c4bb9adf9808a49429acef787b51467f6de1b4d63b60eae5810d5a6",
+  "subset_method": "Select config/scope.json articles; preserve article text and effective-date notes.",
+  "effective_status": "Source snapshot; individual effective status needs human review.",
+  "rental_rules": {
+    "title": "住宅租賃定型化契約應記載及不得記載事項",
+    "landing_url": "https://data.gov.tw/dataset/178758",
+    "pdf_url": "https://www.ey.gov.tw/File/43BC094940995CFC?A=C",
+    "pdf_sha256": "fb25806446b812295e95237409e51f4eccffef18c134db126ded65610d2ddbb4",
+    "version_date": "20250418",
+    "retrieved_at": "2026-11-14T09:40:39.939237+00:00",
+    "effective_note": "114年4月18日公告版。各點沿革與生效日期請參照官方PDF首頁。",
+    "points_file": "data/seed/residential_lease_rules.json",
+    "points_sha256": "ff8c0d6d59c242de8650c3fadd54c9e0d91cdd7fe9145f334c2dda7ff00a30ad",
+    "extraction": "PDF pages 1–7, body only. Remove page numbers, normalize layout whitespace, rejoin wrapped lines, retain headings."
+  }
+}

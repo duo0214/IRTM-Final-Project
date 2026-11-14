@@ -1,0 +1,9 @@
+{
+  "corpus_id": "official_rental_20261114_v3",
+  "corpus_path": "data/processed/official/corpus.jsonl",
+  "phrase_path": "data/seed/phrases.json",
+  "search_backend": "character_bigram_bm25_baseline",
+  "phrase_backend": "reference_scan_not_pat_tree",
+  "team_status": "starter_not_final_research",
+  "logging_enabled": false
+}
